@@ -16,6 +16,7 @@
         <activity
             android:name=".MediaVibrationActivity"
             android:exported="true"
+            android:excludeFromRecents="true"
             android:label="@string/settings_title"> <!-- Use a more descriptive label for settings -->
 
             <!-- This makes the app appear on the launcher -->
