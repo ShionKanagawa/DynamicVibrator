@@ -12,10 +12,14 @@
     <string name="setting_enable_summary">Vibrate when media is playing</string>
 
     <string name="setting_level_title">Vibration Level</string>
+    <string name="setting_level_off">Off</string>
     <string name="setting_level_low">Low</string>
     <string name="setting_level_medium">Medium</string>
     <string name="setting_level_high">High</string>
 
     <string name="setting_latency_title">Vibration Latency</string>
     <string name="setting_latency_unit_ms">%dms</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="qs_tile_label">Dynamic Vibration</string>
 </resources>

@@ -12,10 +12,14 @@
     <string name="setting_enable_summary">メディア再生時に振動します</string>
 
     <string name="setting_level_title">振動レベル</string>
+    <string name="setting_level_off">オフ</string>
     <string name="setting_level_low">弱</string>
     <string name="setting_level_medium">中</string>
     <string name="setting_level_high">強</string>
 
     <string name="setting_latency_title">振動の遅延</string>
     <string name="setting_latency_unit_ms">%dms</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="qs_tile_label">ダイナミック振動</string>
 </resources>
