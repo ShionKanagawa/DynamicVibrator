@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">动态振动器</string>
+
+    <!-- Settings Screen Titles -->
+    <string name="settings_title">动态振动</string>
+    <string name="group_title_general">通用</string>
+    <string name="group_title_controls">控制</string>
+
+    <!-- Setting Items -->
+    <string name="setting_enable_title">启用媒体振动</string>
+    <string name="setting_enable_summary">媒体播放时振动</string>
+
+    <string name="setting_level_title">振动强度</string>
+    <string name="setting_level_low">低</string>
+    <string name="setting_level_medium">中</string>
+    <string name="setting_level_high">高</string>
+
+    <string name="setting_latency_title">振动延迟</string>
+    <string name="setting_latency_unit_ms">%d毫秒</string>
+</resources>

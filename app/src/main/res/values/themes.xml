@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    Base application theme.
+    For more details and customization options, see:
+    https://developer.android.com/guide/topics/ui/look-and-feel/themes
+    -->
+    <style name="Theme.DynamicVibrator" parent="Theme.Material3.DayNight">
+        <!-- You can add customizations here for colors, shapes, typography, etc. -->
+
+        <!-- For example, to set the primary color -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+</resources>
