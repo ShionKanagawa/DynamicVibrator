@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class io.github.shionkanagawa.dynamicvibrator.MediaVibrationActivity { *; }
+-keep class io.github.shionkanagawa.dynamicvibrator.VolumeListenerService { *; }
+-keep class io.github.shionkanagawa.dynamicvibrator.VibrationTileService { *; }
+-keep class io.github.shionkanagawa.dynamicvibrator.BootCompletedReceiver { *; }

@@ -5,6 +5,7 @@
  */
 package io.github.shionkanagawa.dynamicvibrator
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,8 +15,18 @@ class MediaVibrationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // SettingsScreen Composable is the entire UI of our app.
             SettingsScreen()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // This is the correct, non-destructive failsafe.
+        // It ensures the service is running if the setting is ON,
+        // without wrongfully changing the setting itself.
+        if (MediaVibration.getMediaVibrationState(this)) {
+            val serviceIntent = Intent(this, VolumeListenerService::class.java)
+            startService(serviceIntent)
         }
     }
 }

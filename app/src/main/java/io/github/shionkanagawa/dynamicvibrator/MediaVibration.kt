@@ -18,6 +18,10 @@ object MediaVibration {
     private const val PREF_MEDIA_VIB_LEVEL: String = "mediavib_level"
     private const val PREF_MEDIA_VIB_LATENCY: String = "mediavib_latency"
 
+    private const val DEFAULT_ENABLE_STATE = false
+    private const val DEFAULT_LEVEL = 1
+    private const val DEFAULT_LATENCY = 0
+
     fun switchMediaVibration(context: Context, enable: Boolean) {
         try {
             val am = context.getSystemService(AudioManager::class.java)
@@ -29,7 +33,6 @@ object MediaVibration {
                 if (enable) 1 else 0
             )
 
-            // Automatically start or stop the listener service
             val serviceIntent = Intent(context, VolumeListenerService::class.java)
             if (enable) {
                 context.startService(serviceIntent)
@@ -39,16 +42,6 @@ object MediaVibration {
 
         } catch (e: Exception) {
             Log.e(TAG, "Failed to switch media vibration", e)
-        }
-    }
-
-    fun isMediaVibAvailable(context: Context): Boolean {
-        return try {
-            val am = context.getSystemService(AudioManager::class.java)
-            am!!.getParameters("somc.media_vibration") != ""
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to check media vibration availability", e)
-            false
         }
     }
 
@@ -84,7 +77,7 @@ object MediaVibration {
         return Settings.Secure.getInt(
             context.contentResolver,
             PREF_MEDIA_VIB_ENABLE,
-            0 // Default to off
+            if (DEFAULT_ENABLE_STATE) 1 else 0
         ) == 1
     }
 
@@ -92,7 +85,7 @@ object MediaVibration {
         return Settings.Secure.getInt(
             context.contentResolver,
             PREF_MEDIA_VIB_LEVEL,
-            1 // Default to 1 (Low)
+            DEFAULT_LEVEL
         )
     }
 
@@ -100,15 +93,31 @@ object MediaVibration {
         return Settings.Secure.getInt(
             context.contentResolver,
             PREF_MEDIA_VIB_LATENCY,
-            0 // Default to 0ms
+            DEFAULT_LATENCY
         )
     }
-
+    
     fun onBoot(context: Context) {
-        if (getMediaVibrationState(context)) {
-             switchMediaVibration(context, true)
-             setMediaVibrationLevel(context, getMediaVibrationLevel(context))
-             setMediaVibrationLatency(context, getMediaVibrationLatency(context))
+        val shouldBeEnabled = getMediaVibrationState(context)
+        Log.d(TAG, "onBoot called. Should be enabled: $shouldBeEnabled")
+
+        if (shouldBeEnabled) {
+            try {
+                // This is a robust way to ensure settings are applied on boot.
+                // We don't do the forceful off/on here to avoid race conditions on boot.
+                // Instead, we just apply the full set of current parameters.
+                val am = context.getSystemService(AudioManager::class.java)
+                am.setParameters("somc.media_vibration=1")
+                am.setParameters("somc.media_vibration_vol_idx=${getMediaVibrationLevel(context)}")
+                am.setParameters("somc.media_vibration_bt_delay=${500 - getMediaVibrationLatency(context)}")
+                
+                val serviceIntent = Intent(context, VolumeListenerService::class.java)
+                context.startService(serviceIntent)
+                Log.d(TAG, "Boot settings applied successfully.")
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed during onBoot initialization", e)
+            }
         }
     }
 }
