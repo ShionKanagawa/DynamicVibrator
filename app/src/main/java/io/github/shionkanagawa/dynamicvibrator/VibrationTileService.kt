@@ -1,13 +1,9 @@
 package io.github.shionkanagawa.dynamicvibrator
 
-import android.content.Intent
 import android.graphics.drawable.Icon
-import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import androidx.annotation.RequiresApi
 
-@RequiresApi(Build.VERSION_CODES.N)
 class VibrationTileService : TileService() {
 
     // Called when the user adds the tile to their Quick Settings.
@@ -54,21 +50,29 @@ class VibrationTileService : TileService() {
         val tile = qsTile ?: return // The tile is not available yet.
         val isEnabled = MediaVibration.getMediaVibrationState(this)
         val level = MediaVibration.getMediaVibrationLevel(this)
+        val useSubtitle = MediaVibration.getUseSubtitle(this)
+
+        val levelName = when (level) {
+            1 -> getString(R.string.setting_level_low)
+            2 -> getString(R.string.setting_level_medium)
+            3 -> getString(R.string.setting_level_high)
+            else -> getString(R.string.setting_level_low) // Fallback
+        }
 
         if (!isEnabled) {
             // State: Off
             tile.state = Tile.STATE_INACTIVE
             tile.label = getString(R.string.qs_tile_label)
-            tile.subtitle = getString(R.string.setting_level_off)
+            tile.subtitle = if (useSubtitle) getString(R.string.setting_level_off) else null
         } else {
             // State: Low, Medium, or High
             tile.state = Tile.STATE_ACTIVE
-            tile.label = getString(R.string.qs_tile_label)
-            tile.subtitle = when (level) {
-                1 -> getString(R.string.setting_level_low)
-                2 -> getString(R.string.setting_level_medium)
-                3 -> getString(R.string.setting_level_high)
-                else -> getString(R.string.setting_level_low) // Fallback
+            if (useSubtitle) {
+                tile.label = getString(R.string.qs_tile_label)
+                tile.subtitle = levelName
+            } else {
+                tile.label = "${getString(R.string.qs_tile_label)}: $levelName"
+                tile.subtitle = null
             }
         }
         tile.icon = Icon.createWithResource(this, R.drawable.ic_tile_vibration)

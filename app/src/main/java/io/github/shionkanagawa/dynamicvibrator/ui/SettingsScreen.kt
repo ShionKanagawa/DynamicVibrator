@@ -31,6 +31,7 @@ fun SettingsScreen() {
     val isEnabled = remember { mutableStateOf(MediaVibration.getMediaVibrationState(context)) }
     val level = remember { mutableIntStateOf(MediaVibration.getMediaVibrationLevel(context)) }
     val latency = remember { mutableIntStateOf(MediaVibration.getMediaVibrationLatency(context)) }
+    val useSubtitle = remember { mutableStateOf(MediaVibration.getUseSubtitle(context)) }
 
     DynamicVibratorTheme {
         Scaffold(
@@ -57,6 +58,17 @@ fun SettingsScreen() {
                             onCheckedChange = {
                                 isEnabled.value = it
                                 MediaVibration.switchMediaVibration(context, it)
+                            }
+                        )
+                        Divider(modifier = Modifier.padding(horizontal = 16.dp))
+                        SwitchSetting(
+                            title = stringResource(id = R.string.setting_use_subtitle_title),
+                            summary = stringResource(id = R.string.setting_use_subtitle_summary),
+                            checked = useSubtitle.value,
+                            haptics = haptics,
+                            onCheckedChange = {
+                                useSubtitle.value = it
+                                MediaVibration.setUseSubtitle(context, it)
                             }
                         )
                     }

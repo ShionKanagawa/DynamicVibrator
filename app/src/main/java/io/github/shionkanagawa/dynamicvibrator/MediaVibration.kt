@@ -17,10 +17,12 @@ object MediaVibration {
     private const val PREF_MEDIA_VIB_ENABLE: String = "mediavib_enable"
     private const val PREF_MEDIA_VIB_LEVEL: String = "mediavib_level"
     private const val PREF_MEDIA_VIB_LATENCY: String = "mediavib_latency"
+    private const val PREF_MEDIA_VIB_USE_SUBTITLE: String = "mediavib_use_subtitle"
 
     private const val DEFAULT_ENABLE_STATE = false
     private const val DEFAULT_LEVEL = 1
     private const val DEFAULT_LATENCY = 0
+    private const val DEFAULT_USE_SUBTITLE = true
 
     fun switchMediaVibration(context: Context, enable: Boolean) {
         try {
@@ -73,6 +75,18 @@ object MediaVibration {
         }
     }
 
+    fun setUseSubtitle(context: Context, useSubtitle: Boolean) {
+        try {
+            Settings.Secure.putInt(
+                context.contentResolver,
+                PREF_MEDIA_VIB_USE_SUBTITLE,
+                if (useSubtitle) 1 else 0
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to set use subtitle state", e)
+        }
+    }
+
     fun getMediaVibrationState(context: Context): Boolean {
         return Settings.Secure.getInt(
             context.contentResolver,
@@ -95,6 +109,14 @@ object MediaVibration {
             PREF_MEDIA_VIB_LATENCY,
             DEFAULT_LATENCY
         )
+    }
+
+    fun getUseSubtitle(context: Context): Boolean {
+        return Settings.Secure.getInt(
+            context.contentResolver,
+            PREF_MEDIA_VIB_USE_SUBTITLE,
+            if (DEFAULT_USE_SUBTITLE) 1 else 0
+        ) == 1
     }
     
     fun onBoot(context: Context) {

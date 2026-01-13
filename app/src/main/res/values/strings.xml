@@ -11,6 +11,9 @@
     <string name="setting_enable_title">Enable Media Vibration</string>
     <string name="setting_enable_summary">Vibrate when media is playing</string>
 
+    <string name="setting_use_subtitle_title">Show level as subtitle</string>
+    <string name="setting_use_subtitle_summary">Show the vibration level in the tile subtitle (may not work on some ROMs)</string>
+
     <string name="setting_level_title">Vibration Level</string>
     <string name="setting_level_off">Off</string>
     <string name="setting_level_low">Low</string>

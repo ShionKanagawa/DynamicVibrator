@@ -11,6 +11,9 @@
     <string name="setting_enable_title">启用媒体振动</string>
     <string name="setting_enable_summary">媒体播放时振动</string>
 
+    <string name="setting_use_subtitle_title">以副标题显示级别</string>
+    <string name="setting_use_subtitle_summary">在图块副标题中显示振动强度（在某些 ROM 上可能无效）</string>
+
     <string name="setting_level_title">振动强度</string>
     <string name="setting_level_off">关闭</string>
     <string name="setting_level_low">低</string>

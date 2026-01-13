@@ -11,6 +11,9 @@
     <string name="setting_enable_title">メディアバイブレーションを有効化</string>
     <string name="setting_enable_summary">メディア再生時に振動します</string>
 
+    <string name="setting_use_subtitle_title">レベルをサブタイトルとして表示</string>
+    <string name="setting_use_subtitle_summary">タイルのサブタイトルに振動レベルを表示します（一部のROMでは動作しない場合があります）</string>
+
     <string name="setting_level_title">振動レベル</string>
     <string name="setting_level_off">オフ</string>
     <string name="setting_level_low">弱</string>
